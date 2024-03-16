@@ -132,8 +132,10 @@ def get_test_indexes():
 
 @pytest.mark.parametrize("index_cls", get_test_indexes())
 class TestRouteLayer:
-    def test_initialization(self, openai_encoder, routes):
-        route_layer = RouteLayer(encoder=openai_encoder, routes=routes, top_k=10, index=index_cls())
+    def test_initialization(self, openai_encoder, routes, index_cls):
+        route_layer = RouteLayer(
+            encoder=openai_encoder, routes=routes, top_k=10, index=index_cls()
+        )
         assert openai_encoder.score_threshold == 0.82
         assert route_layer.score_threshold == 0.82
         assert route_layer.top_k == 10
